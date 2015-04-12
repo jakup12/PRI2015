@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+body.mainPage {
+    margin:90px 120px 90px 120px;
+    background-image: url("images/red_notebook.png");
+	background-repeat: no-repeat;    
+}
+
+body.loginPage {
+	margin:90px 180px 90px 180px;
+	background-image: url("images/blue_notebook.png");
+	background-repeat: no-repeat;
+}
+
+body.registerPage {
+	margin:90px 105px 90px 105px;
+	background-image: url("images/green_notebook.png");
+	background-repeat: no-repeat;
+}
+
+.rTab {
+	text-align: right;
+}
+
+.calendarBody{
+	margin:10px 40px 10px 40px;
+}
+
+.calendarTable {
+	border-spacing: 15px;
+	
+}
+
+.calendarCell {
+	width: 130px;
+	height: 130px;	
+	background-image: url("images/calendar_page.png");
+	background-repeat: no-repeat;
+}
+
+.centerBtn {
+	text-align: center;
+}
