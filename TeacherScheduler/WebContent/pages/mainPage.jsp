@@ -14,6 +14,7 @@
 <!-- <title>Insert title here</title>-->
 </head>
 <body class="mainPage">
+	<!-- MAIN PAGE FOR TEACHER -->
 	<% if(session.getAttribute("isTeacher").toString().compareTo("true") == 0){%>
 		<h3>Zalogowano pomyślnie jako wykładowca!</h3>
 		<table>
@@ -27,11 +28,22 @@
 		</tr>   
 		</table>
 		<br>
+		
+	<!-- Formularz otwierający kalendarz -->
 		<form action="getTeacherCalendar" method="post">
 			<input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
 			<br>
 			<input type="submit" value="Mój kalendarz" name=""/>
 		</form>
+		
+		<!-- Przejście do zarządzania grupami -->
+		<form action="getTeacherGroups" method="post">
+			<input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
+			<br>
+			<input type="submit" value="Zarządzaj grupami" name=""/>
+		</form>
+		
+	<!-- MAIN PAGE FOR STUDENT -->	
 		
 	<% } else { %>
 		<h3>Zalogowano pomyślnie jako student!</h3>

@@ -34,5 +34,7 @@
         <!-- Names the annotated entity class -->
         <mapping class="com.scheduler.hibernate.dto.User" />
         <mapping class="com.scheduler.hibernate.dto.Term" />
+        <mapping class="com.scheduler.hibernate.dto.Group" />
+        <mapping class="com.scheduler.hibernate.dto.GroupUser" />
     </session-factory>
 </hibernate-configuration>

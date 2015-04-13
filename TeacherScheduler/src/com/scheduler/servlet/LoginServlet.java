@@ -60,7 +60,7 @@ public class LoginServlet
             // jeśli student pobieram listę wykładowców
             if ( !user.isTeacher() )
             {
-                List<User> listOfTeachers = dbm.getListOfTeachers();
+                List<User> listOfTeachers = dbm.getListOfUsers( true );
                 request.getSession().setAttribute( "listOfTeachersSize", listOfTeachers.size() );
 
                 User teacher = null;

@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.scheduler.hibernate.dto.Group;
+import com.scheduler.hibernate.dto.GroupUser;
 import com.scheduler.hibernate.dto.Mail;
 import com.scheduler.hibernate.dto.Term;
 import com.scheduler.hibernate.dto.User;
@@ -470,5 +472,161 @@ public class DBManager
             }
         }
         return listOfMails;
+    }
+
+// wstawianie nowej grupy
+    public void insertGroup( String groupName, String teacherName )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+
+        try
+        {
+            Group group = new Group();
+
+            group.setGroupName( groupName );
+            group.setGroupCount( 0 );
+            group.setTeacherName( teacherName );
+
+            session.beginTransaction();
+            session.save( group );
+
+            session.getTransaction().commit();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                session.close();
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    // pobieranie grup dla wyk³adowcy
+    public List<Group> getGroupsForTeacher( String userId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<Group> listOfGroups = new ArrayList<Group>();
+
+        try
+        {
+            session.beginTransaction();
+
+            String hqlQuery = "FROM Group g WHERE g.teacherName = :userId order by g.groupName asc";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "userId", userId );
+            listOfGroups = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfGroups;
+    }
+
+    public void addStudentToGroup( String groupId, String studentUserId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+
+        try
+        {
+            // sprawdzam czy student jest ju¿ w podanej grupie
+            List<GroupUser> checkGroupUser = new ArrayList<GroupUser>();
+            String hqlQuery = "FROM GroupUser gu WHERE gu.groupId = :groupId AND gu.studentId = :studentUserId";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "groupId", Integer.parseInt( groupId ) );
+            query.setParameter( "studentUserId", studentUserId );
+            checkGroupUser = query.list();
+
+            if ( checkGroupUser.size() == 0 )
+            {
+                GroupUser groupUser = new GroupUser();
+
+                groupUser.setGroupId( Integer.parseInt( groupId ) );
+                groupUser.setStudentId( studentUserId );
+
+                session.beginTransaction();
+                session.save( groupUser );
+            }
+
+            session.getTransaction().commit();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                session.close();
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public List<GroupUser> getStudentsForGroup( int groupId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<GroupUser> listOfStudents = new ArrayList<GroupUser>();
+
+        try
+        {
+            session.beginTransaction();
+
+            String hqlQuery = "FROM GroupUser gu WHERE gu.groupId = :groupId";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "groupId", groupId );
+            listOfStudents = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfStudents;
     }
 }

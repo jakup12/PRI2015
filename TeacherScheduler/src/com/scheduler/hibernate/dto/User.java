@@ -74,4 +74,9 @@ public class User
     {
         this.isTeacher = isTeacher;
     }
+
+    public String getFullName()
+    {
+        return this.getUserName() + " " + this.getUserSurname();
+    }
 }
