@@ -474,7 +474,7 @@ public class DBManager
         return listOfMails;
     }
 
-// wstawianie nowej grupy
+    // wstawianie nowej grupy
     public void insertGroup( String groupName, String teacherName )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -629,4 +629,43 @@ public class DBManager
         }
         return listOfStudents;
     }
+
+    // pobieranie listy wszystkich wykładowców
+    public List<User> getListOfUsers( boolean isTeacher )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<User> listOfTeachers = new ArrayList<User>();
+
+        try
+        {
+            session.beginTransaction();
+
+            String hqlQuery = "FROM User u WHERE u.isTeacher = :isTeacher";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "isTeacher", isTeacher );
+            listOfTeachers = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfTeachers;
+    }
+
 }
