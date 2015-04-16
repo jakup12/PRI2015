@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 body.mainPage {
-    margin:90px 120px 90px 120px;
+    margin:50px 120px 90px 120px;
     background-image: url("images/red_notebook.png");
 	background-repeat: no-repeat;    
 }

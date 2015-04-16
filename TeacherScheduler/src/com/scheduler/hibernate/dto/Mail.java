@@ -1,9 +1,9 @@
 package com.scheduler.hibernate.dto;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +13,8 @@ public class Mail {
 
 	@Id
     @Column( name = "MAILID" )
-    private String mailId;
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
+    private int mailId;
 	
     @Column( name = "SENDERID" )
     private String senderId;
@@ -27,12 +28,12 @@ public class Mail {
     @Column( name = "DATE" )
     private String date;
     
-    public String getMailId()
+    public int getMailId()
     {
         return mailId;
     }
 
-    public void setMailId( String mailId )
+    public void setMailId( int mailId )
     {
         this.mailId = mailId;
     }

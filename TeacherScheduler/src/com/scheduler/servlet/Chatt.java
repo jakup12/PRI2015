@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import com.scheduler.hibernate.dto.Mail;
+import com.scheduler.hibernate.dto.ChatMess;
 import com.scheduler.hibernate.run.DBManager;
 
 /**
  * Servlet implementation class GetSendersMails
  */
-@WebServlet( "/pages/getSendersMails" )
-public class GetSendersMails
+@WebServlet( "/pages/chat" )
+public class Chatt
     extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class GetSendersMails
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetSendersMails()
+    public Chatt()
     {
         super();
 
@@ -43,31 +43,31 @@ public class GetSendersMails
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
         throws ServletException, IOException
     {
-        String senderId = "";
-        if ( request.getSession().getAttribute( "userLogin" ) != null )
+               
+        int chatId;
+        if ( request.getSession().getAttribute( "chatId" ) != null )
         {
-        	senderId = (String) request.getSession().getAttribute( "userLogin" );
+        	chatId = (int) request.getSession().getAttribute( "chatId" );
         }
         else
         {
-        	senderId = new String( request.getParameter( "userLogin" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        	chatId = Integer.parseInt(new String( request.getParameter( "chatId" ).getBytes( "ISO-8859-1" ), "UTF-8" ));
         }
 
         DBManager dbm = new DBManager();
-        List<Mail> listOfMails = dbm.getMailsForSender( senderId);
+        List<ChatMess> listOfMess = dbm.getChat( chatId);
 
-        Mail mail = null;
-        request.getSession().setAttribute( "listOfMailsSize", listOfMails.size() );
+        ChatMess mess = null;
+        request.getSession().setAttribute( "listOfMessSize", listOfMess.size() );
 
-        for ( int i = 0; i < listOfMails.size(); i++ )
+        for ( int i = 0; i < listOfMess.size(); i++ )
         {
-            mail = listOfMails.get( i );
-            request.getSession().setAttribute( "receiverId" + i , mail.getReceiverId());
-            request.getSession().setAttribute( "message" + i , mail.getMessage());
-            request.getSession().setAttribute( "date" + i , mail.getDate());
+        	mess = listOfMess.get( i );
+            request.getSession().setAttribute( "userId" + i , mess.getUserId());
+            request.getSession().setAttribute( "message" + i , mess.getMessage());
 
         }
 
-        response.sendRedirect( "sendersMails.jsp" );
+        response.sendRedirect( "chat.jsp" );
     }
 }

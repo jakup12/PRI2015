@@ -27,7 +27,6 @@
 			<td><%=session.getAttribute("userSurname") %></td>
 		</tr>   
 		</table>
-		<br>
 		
 	<!-- Formularz otwierający kalendarz -->
 		<form action="getTeacherCalendar" method="post">
@@ -73,20 +72,27 @@
             </div>
        	</form>
 	<%}%>
+	<h3>Nowa wiadomość</h3>
+		<form action="newMail" method="post">
+			
+			<input type="submit" value="Nowa Wiadomość" name=""/>
+		</form>
 	
 	<h3>Wysłane wiadomości</h3>
-		<br>
 		<form action="getSendersMails" method="post">
 			<input type="hidden" name="senderId" value="<%=session.getAttribute("userLogin")%>"/>
-			<br>
+			
 			<input type="submit" value="Wysłane" name=""/>
 		</form>
 	<h3>Odebrane wiadomości</h3>
-		<br>
 		<form action="getReceiversMails" method="post">
 			<input type="hidden" name="receiverId" value="<%=session.getAttribute("userLogin")%>"/>
-			<br>
+			
 			<input type="submit" value="Odebrane" name=""/>
+		</form>
+	<h3>Dołącz do czatu</h3>
+		<form action="ChatConnect" method="post">
+			<input type="submit" value="Czat" name=""/>
 		</form>
 </body>
 </html>

@@ -87,7 +87,6 @@ public class GetTeacherGroups
         List<User> listOfStudents = new ArrayList<User>();
 
         listOfStudents = dbm.getListOfUsers( false );
-
         request.getSession().setAttribute( "listOfStudentsSize", listOfStudents.size() );
 
         for ( int j = 0; j < listOfStudents.size(); j++ )

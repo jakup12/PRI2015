@@ -15,9 +15,9 @@ import com.scheduler.hibernate.dto.Mail;
 import com.scheduler.hibernate.run.DBManager;
 
 /**
- * Servlet implementation class GetSendersMails
+ * Servlet implementation class GetReceiversMails
  */
-@WebServlet( "/pages/getSendersMails" )
+@WebServlet( "/pages/getReceiversMails" )
 public class GetReceiversMails
     extends HttpServlet
 {
@@ -51,7 +51,7 @@ public class GetReceiversMails
         }
         else
         {
-        	receiverId = new String( request.getParameter( "senderId" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        	receiverId = new String( request.getParameter( "userLogin" ).getBytes( "ISO-8859-1" ), "UTF-8" );
         }
 
         DBManager dbm = new DBManager();

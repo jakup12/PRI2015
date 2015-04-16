@@ -36,5 +36,8 @@
         <mapping class="com.scheduler.hibernate.dto.Term" />
         <mapping class="com.scheduler.hibernate.dto.Group" />
         <mapping class="com.scheduler.hibernate.dto.GroupUser" />
+	<mapping class="com.scheduler.hibernate.dto.Mail" />
+	<mapping class="com.scheduler.hibernate.dto.Chat" />
+	<mapping class="com.scheduler.hibernate.dto.ChatMess" />
     </session-factory>
 </hibernate-configuration>

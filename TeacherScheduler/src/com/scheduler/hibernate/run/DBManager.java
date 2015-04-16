@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.scheduler.hibernate.dto.Chat;
+import com.scheduler.hibernate.dto.ChatMess;
 import com.scheduler.hibernate.dto.Group;
 import com.scheduler.hibernate.dto.GroupUser;
 import com.scheduler.hibernate.dto.Mail;
@@ -16,7 +18,7 @@ import com.scheduler.hibernate.dto.Term;
 import com.scheduler.hibernate.dto.User;
 
 /**
- * G³ówna klasa zarz¹dzaj¹ca operacjami na bazie danych
+ * GÂ³Ã³wna klasa zarzÂ¹dzajÂ¹ca operacjami na bazie danych
  */
 public class DBManager
 {
@@ -27,7 +29,7 @@ public class DBManager
     {
     }
 
-    // pobieranie obiektu u¿ytkownika
+    // pobieranie obiektu uÂ¿ytkownika
     public User getUser( String userName )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -60,7 +62,7 @@ public class DBManager
         return returnedUser;
     }
 
-    // weryfikacja czy obiekt u¿ytkownika jest ju¿ w BD
+    // weryfikacja czy obiekt uÂ¿ytkownika jest juÂ¿ w BD
     public boolean checkIfUserExists( String userLogin )
     {
         boolean exists = false;
@@ -103,7 +105,7 @@ public class DBManager
         return exists;
     }
 
-    // wstawienie nowego obiektu u¿ytkownika
+    // wstawienie nowego obiektu uÂ¿ytkownika
     public void insertUser( String userId, String password, String name, String surname, boolean isTeacher )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -178,7 +180,7 @@ public class DBManager
         }
     }
 
-    // pobranie terminów z kalendarza wyk³adowcy po podanym loginie
+    // pobranie terminÃ³w z kalendarza wykÂ³adowcy po podanym loginie
     public List<Term> getTermsForTeacher( String userId, boolean notAssignedOnly )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -226,7 +228,7 @@ public class DBManager
         return listOfTerms;
     }
 
-    // pobieranie listy wszystkich wyk³adowców
+    // pobieranie listy wszystkich wykÂ³adowcÃ³w
     public List<User> getListOfTeachers()
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -262,7 +264,7 @@ public class DBManager
         return listOfTeachers;
     }
 
-    // usuniêcie terminu z BD - po ID
+    // usuniÃªcie terminu z BD - po ID
     public void removeTerm( String termId )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -510,7 +512,7 @@ public class DBManager
         }
     }
 
-    // pobieranie grup dla wyk³adowcy
+    // pobieranie grup dla wykÂ³adowcy
     public List<Group> getGroupsForTeacher( String userId )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -554,7 +556,7 @@ public class DBManager
 
         try
         {
-            // sprawdzam czy student jest ju¿ w podanej grupie
+            // sprawdzam czy student jest juÂ¿ w podanej grupie
             List<GroupUser> checkGroupUser = new ArrayList<GroupUser>();
             String hqlQuery = "FROM GroupUser gu WHERE gu.groupId = :groupId AND gu.studentId = :studentUserId";
             Query query = session.createQuery( hqlQuery );
@@ -630,7 +632,7 @@ public class DBManager
         return listOfStudents;
     }
 
-    // pobieranie listy wszystkich wykÅ‚adowcÃ³w
+    // pobieranie listy wszystkich wykÃ…â€šadowcÃƒÂ³w
     public List<User> getListOfUsers( boolean isTeacher )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -667,5 +669,109 @@ public class DBManager
         }
         return listOfTeachers;
     }
+    
+    ////
+    public List<ChatMess> getChat( int chatId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<ChatMess> listOfMess = new ArrayList<ChatMess>();
 
+        try
+        {
+            session.beginTransaction();
+
+            String hqlQuery = "FROM ChatMess m WHERE m.chatId = :chatId";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "chatId", chatId );
+            listOfMess = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfMess;
+    }
+
+	public void addChatMess(String userId, String chatId, String message) {
+        Session session = HibernateManager.getFactory().openSession();
+
+        try
+        {
+            ChatMess mess = new ChatMess();
+
+            mess.setUserId( userId );
+            mess.setChatId( Integer.parseInt(chatId) );
+            mess.setMessage( message );
+            session.beginTransaction();
+            session.save( mess );
+//System.out.println("add mess");
+            session.getTransaction().commit();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                session.close();
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+	public void addChat( int groupId, String teacherName )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+
+        try
+        {
+            Chat chat = new Chat();
+
+            chat.setGroupId( groupId );
+            chat.setTeacherId(teacherName );
+
+            session.beginTransaction();
+            session.save( chat );
+
+            session.getTransaction().commit();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                session.close();
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
