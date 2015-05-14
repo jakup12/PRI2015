@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.scheduler.hibernate.dto.Term;
-import com.scheduler.hibernate.dto.User;
 import com.scheduler.hibernate.dto.Mail;
 import com.scheduler.hibernate.run.DBManager;
 
