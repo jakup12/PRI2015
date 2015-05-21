@@ -42,6 +42,9 @@
 			<input type="submit" value="Zarządzaj grupami" name=""/>
 		</form>
 		
+		<!-- Przejście do formularza dodawania plików -->
+		<br><a href="getAllGroupsForFile"><button>Dodaj plik</button></a>
+		
 	<!-- MAIN PAGE FOR STUDENT -->	
 		
 	<% } else { %>

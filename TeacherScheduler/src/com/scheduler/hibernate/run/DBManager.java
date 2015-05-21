@@ -774,4 +774,74 @@ public class DBManager
             }
         }
     }
+	
+	// pobieranie listy wszystkich grup
+    public List<Group> getAllGroups()
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<Group> listOfGroups = new ArrayList<Group>();
+
+        try
+        {
+            session.beginTransaction();
+
+            String hqlQuery = "FROM Group";
+            Query query = session.createQuery( hqlQuery );
+            listOfGroups = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfGroups;
+    }
+
+    public void addFileForGroup( String fileName, String groupId )
+    {
+
+        Session session = HibernateManager.getFactory().openSession();
+
+        try
+        {
+            FileUpload fileUpload = new FileUpload();
+            fileUpload.setFileName( fileName );
+            fileUpload.setGroupId( groupId );
+
+            session.beginTransaction();
+            session.save( fileUpload );
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                session.close();
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
