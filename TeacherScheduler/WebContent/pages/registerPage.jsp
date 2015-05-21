@@ -28,6 +28,10 @@
 				<td class="rTab">Nazwisko:</td>
 				<td><input type="text" name="reg_surname" id="reg_surname"></td>
 			</tr>
+			<tr>
+				<td class="rTab">Email:</td>
+				<td><input type="text" name="reg_email" id="reg_email"></td>
+			</tr>
             <tr>
 				<td colspan="2">
 				    <input type="radio" name="reg_isTeacher" value="TRUE"> Wykładowca 

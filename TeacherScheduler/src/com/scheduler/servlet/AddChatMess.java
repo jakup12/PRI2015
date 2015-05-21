@@ -53,7 +53,7 @@ public class AddChatMess
 
         dbm.addChatMess(userId, chatId, message);
 
-
+        //request.getSession().setAttribute( "chatId", chatId);
         response.sendRedirect( "chat.jsp" );
     }
 }

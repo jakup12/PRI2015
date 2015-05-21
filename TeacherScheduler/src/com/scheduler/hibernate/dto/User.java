@@ -24,6 +24,9 @@ public class User
 
     @Column( name = "ISTEACHER" )
     boolean isTeacher;
+    
+    @Column( name = "EMAIL" )
+    private String email;
 
     public String getUserId()
     {
@@ -78,5 +81,15 @@ public class User
     public String getFullName()
     {
         return this.getUserName() + " " + this.getUserSurname();
+    }
+    
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail( String email )
+    {
+        this.email = email;
     }
 }

@@ -1,0 +1,82 @@
+CREATE DATABASE teacher_scheduler
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Polish_Poland.1250'
+       LC_CTYPE = 'Polish_Poland.1250'
+       CONNECTION LIMIT = -1;
+
+CREATE TABLE termstable
+(
+  term_id serial NOT NULL,
+  term_date character varying(4000),
+  term_hour character varying(4000),
+  assignation character varying(4000),
+  teacher character varying(4000),
+  CONSTRAINT termstable_pkey PRIMARY KEY (term_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE termstable
+  OWNER TO postgres;
+
+  
+CREATE TABLE usertable
+(
+  userid character varying(256) NOT NULL,
+  username character varying(4000),
+  usersurname character varying(4000),
+  userpassword character varying(4000),
+  isteacher boolean,
+  email character varying(4000),
+  CONSTRAINT user_data_pkey PRIMARY KEY (userid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE usertable
+  OWNER TO postgres;
+
+CREATE TABLE mailstable
+(
+  mailid serial NOT NULL,
+  senderid character varying(255),
+  receiverid character varying(255),
+  message character varying(4000),
+  date character varying(255),
+  CONSTRAINT mailstable_pkey PRIMARY KEY (mailid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE mailstable
+  OWNER TO postgres;
+
+CREATE TABLE chattable
+(
+  chatid serial NOT NULL,
+  teacherid character varying(255),
+  groupid integer,
+  chatname character varying(255),
+  CONSTRAINT chattable_pkey PRIMARY KEY (chatid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE chattable
+  OWNER TO postgres;
+
+CREATE TABLE chatmesstable
+(
+  messid serial NOT NULL,
+  chatid integer,
+  userid character varying(255),
+  message character varying(4000),
+  CONSTRAINT chatmesstable_pkey PRIMARY KEY (messid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE chatmesstable
+  OWNER TO postgres;

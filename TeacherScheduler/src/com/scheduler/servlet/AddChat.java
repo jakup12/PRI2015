@@ -36,12 +36,13 @@ public class AddChat
     {
         int groupId = Integer.parseInt(new String( request.getParameter( "groupId" ).getBytes( "ISO-8859-1" ), "UTF-8" ));
         String teacherName = new String( request.getParameter( "teacherName" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        String chatName = new String( request.getParameter( "chatName" ).getBytes( "ISO-8859-1" ), "UTF-8" );
 
         DBManager dbm = new DBManager();
 
-        dbm.addChat(groupId, teacherName);
+        dbm.addChat(groupId, teacherName, chatName);
 
-        response.sendRedirect( "getTeacherGroups" );
+        response.sendRedirect( "manageGroups.jsp" );
     }
 
 }

@@ -28,6 +28,13 @@
 		</tr>   
 		</table>
 		
+		<form action="setEmail" method="post">
+	            <input name="email" type="text" value="<%=session.getAttribute("email")%>"/>
+	            <input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
+	            <input type="submit" value="Uaktualnij" />
+	          
+	       	</form>
+		
 	<!-- Formularz otwierający kalendarz -->
 		<form action="getTeacherCalendar" method="post">
 			<input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
@@ -56,6 +63,13 @@
 			<td><%=session.getAttribute("userSurname") %></td>
 		</tr>  
 		</table>
+		
+		<form action="setEmail" method="post">
+	            <input name="email" type="text" value="<%=session.getAttribute("email")%>"/>
+	            <input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
+	            <input type="submit" value="Uaktualnij" />
+	          
+	       	</form>
 		<br> 	
 		<form action="selectTeacher" method="post" id="teacherForm">
 			<h4>*** Zapis na dyżury ***</h4>Wybierz wykładowcę:	

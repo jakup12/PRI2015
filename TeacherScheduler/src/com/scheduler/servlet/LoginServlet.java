@@ -56,6 +56,7 @@ public class LoginServlet
             request.getSession().setAttribute( "userName", user.getUserName() );
             request.getSession().setAttribute( "userSurname", user.getUserSurname() );
             request.getSession().setAttribute( "isTeacher", user.isTeacher() );
+            request.getSession().setAttribute( "email", user.getEmail() );
 
             // jeśli student pobieram listę wykładowców
             if ( !user.isTeacher() )
