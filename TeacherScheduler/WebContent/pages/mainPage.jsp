@@ -88,7 +88,6 @@
             </div>
        	</form>
 	<%}%>
-	*******************
 		<form action="newMail" method="post">
 			
 			<input type="submit" value="Nowa Wiadomość" name=""/>

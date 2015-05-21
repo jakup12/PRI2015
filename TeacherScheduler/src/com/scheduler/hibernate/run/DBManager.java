@@ -13,6 +13,7 @@ import org.hibernate.Session;
 
 import com.scheduler.hibernate.dto.Chat;
 import com.scheduler.hibernate.dto.ChatMess;
+import com.scheduler.hibernate.dto.FileUpload;
 import com.scheduler.hibernate.dto.Group;
 import com.scheduler.hibernate.dto.GroupUser;
 import com.scheduler.hibernate.dto.Mail;
@@ -21,7 +22,7 @@ import com.scheduler.hibernate.dto.User;
 import com.scheduler.servlet.SendEmail;
 
 /**
- * G³ówna klasa zarz¹dzaj¹ca operacjami na bazie danych
+ * GÂłĂłwna klasa zarzÂądzajÂąca operacjami na bazie danych
  */
 public class DBManager
 {
@@ -32,7 +33,7 @@ public class DBManager
     {
     }
 
-    // pobieranie obiektu u¿ytkownika
+    // pobieranie obiektu uÂżytkownika
     public User getUser( String userName )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -65,7 +66,7 @@ public class DBManager
         return returnedUser;
     }
 
-    // weryfikacja czy obiekt u¿ytkownika jest ju¿ w BD
+    // weryfikacja czy obiekt uÂżytkownika jest juÂż w BD
     public boolean checkIfUserExists( String userLogin )
     {
         boolean exists = false;
@@ -108,7 +109,7 @@ public class DBManager
         return exists;
     }
 
-    // wstawienie nowego obiektu u¿ytkownika
+    // wstawienie nowego obiektu uÂżytkownika
     public void insertUser( String userId, String password, String name, String surname, boolean isTeacher, String email )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -122,12 +123,15 @@ public class DBManager
             user.setUserName( name );
             user.setUserSurname( surname );
             user.setTeacher( isTeacher );
-            if (email==null||email.isEmpty()) {
-				user.setEmail("BRAK");
-			}else{
-				user.setEmail(email);
-			}
-            
+            if ( email == null || email.isEmpty() )
+            {
+                user.setEmail( "BRAK" );
+            }
+            else
+            {
+                user.setEmail( email );
+            }
+
             session.beginTransaction();
             session.save( user );
 
@@ -188,7 +192,7 @@ public class DBManager
         }
     }
 
-    // pobranie terminów z kalendarza wyk³adowcy po podanym loginie
+    // pobranie terminĂłw z kalendarza wykÂładowcy po podanym loginie
     public List<Term> getTermsForTeacher( String userId, boolean notAssignedOnly )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -236,7 +240,7 @@ public class DBManager
         return listOfTerms;
     }
 
-    // pobieranie listy wszystkich wyk³adowców
+    // pobieranie listy wszystkich wykÂładowcĂłw
     public List<User> getListOfTeachers()
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -272,7 +276,7 @@ public class DBManager
         return listOfTeachers;
     }
 
-    // usuniêcie terminu z BD - po ID
+    // usuniĂŞcie terminu z BD - po ID
     public void removeTerm( String termId )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -386,34 +390,34 @@ public class DBManager
             mail.setReceiverId( receiverId );
             mail.setMessage( message );
             mail.setDate( date );
-            mail.setTags(" ");
+            mail.setTags( " " );
             session.beginTransaction();
             session.save( mail );
 
             session.getTransaction().commit();
-            
-            
-	        User user = new User();
-	        String email;
-	        try
-	        {
-	            session.beginTransaction();
-	            user = (User) session.get( User.class, receiverId );
-	            email = user.getEmail();
-	            session.getTransaction().commit();
-	            
-	            try {
-	            	new SendEmail().send(email,"[KOM] Nowa wiadomość od " + senderId, message);
-	 	     	} catch (MessagingException e) {
-	 	     		e.printStackTrace();
-	 	     	}
-	        }
-	        catch ( Exception e )
-	        {
-	            e.printStackTrace();
-	        }
-	        
-	       
+
+            User user = new User();
+            String email;
+            try
+            {
+                session.beginTransaction();
+                user = (User) session.get( User.class, receiverId );
+                email = user.getEmail();
+                session.getTransaction().commit();
+
+                try
+                {
+                    new SendEmail().send( email, "[KOM] Nowa wiadomoĹ›Ä‡ od " + senderId, message );
+                }
+                catch ( MessagingException e )
+                {
+                    e.printStackTrace();
+                }
+            }
+            catch ( Exception e )
+            {
+                e.printStackTrace();
+            }
 
         }
         catch ( Exception e )
@@ -543,7 +547,7 @@ public class DBManager
         }
     }
 
-    // pobieranie grup dla wyk³adowcy
+    // pobieranie grup dla wykÂładowcy
     public List<Group> getGroupsForTeacher( String userId )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -587,7 +591,7 @@ public class DBManager
 
         try
         {
-            // sprawdzam czy student jest ju¿ w podanej grupie
+            // sprawdzam czy student jest juÂż w podanej grupie
             List<GroupUser> checkGroupUser = new ArrayList<GroupUser>();
             String hqlQuery = "FROM GroupUser gu WHERE gu.groupId = :groupId AND gu.studentId = :studentUserId";
             Query query = session.createQuery( hqlQuery );
@@ -663,7 +667,7 @@ public class DBManager
         return listOfStudents;
     }
 
-    // pobieranie listy wszystkich wykÅ‚adowcÃ³w
+    // pobieranie listy wszystkich wykĂ…â€šadowcĂ�Âłw
     public List<User> getListOfUsers( boolean isTeacher )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -700,8 +704,8 @@ public class DBManager
         }
         return listOfTeachers;
     }
-    
-    ////
+
+    // //
     public List<ChatMess> getChat( int chatId )
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -739,7 +743,8 @@ public class DBManager
         return listOfMess;
     }
 
-	public void addChatMess(String userId, String chatId, String message) {
+    public void addChatMess( String userId, String chatId, String message )
+    {
         Session session = HibernateManager.getFactory().openSession();
 
         try
@@ -747,11 +752,11 @@ public class DBManager
             ChatMess mess = new ChatMess();
 
             mess.setUserId( userId );
-            mess.setChatId( Integer.parseInt(chatId) );
+            mess.setChatId( Integer.parseInt( chatId ) );
             mess.setMessage( message );
             session.beginTransaction();
             session.save( mess );
-//System.out.println("add mess");
+            // System.out.println("add mess");
             session.getTransaction().commit();
 
         }
@@ -772,65 +777,32 @@ public class DBManager
         }
     }
 
-	public void addChat( int groupId, String teacherName, String chatName )
+    public void addChat( int groupId, String teacherName, String chatName )
     {
         Session session = HibernateManager.getFactory().openSession();
         /*
-        boolean free = true;
-        Chat returnedChat = null;
+         * boolean free = true; Chat returnedChat = null; try { session.beginTransaction(); returnedChat = (Chat)
+         * session.get( Chat.class, groupId ); session.getTransaction().commit(); } catch ( Exception e ) {
+         * e.printStackTrace(); } finally { try { if ( session != null ) { session.close(); } } catch ( Exception ex ) {
+         * ex.printStackTrace(); } } if (returnedChat!=null) { free = false; } if (free) {
+         * System.out.println("Czat nie istnieje"); }else{ System.out.println("Czat istnieje"); } session =
+         * HibernateManager.getFactory().openSession();
+         */
 
         try
         {
+            // if (free) {
+            Chat chat = new Chat();
+
+            chat.setGroupId( groupId );
+            chat.setTeacherId( teacherName );
+            chat.setChatName( chatName );
+
             session.beginTransaction();
-            returnedChat = (Chat) session.get( Chat.class,  groupId );
+            session.save( chat );
+
             session.getTransaction().commit();
-        }
-        catch ( Exception e )
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if ( session != null )
-                {
-                    session.close();
-                }
-            }
-            catch ( Exception ex )
-            {
-                ex.printStackTrace();
-            }
-        }
-       	
-        if (returnedChat!=null) {
-			free = false;
-		}
-        
-        if (free) {
-        	System.out.println("Czat nie istnieje");
-		}else{
-			System.out.println("Czat istnieje");
-		}
-        
-        session = HibernateManager.getFactory().openSession();*/
-        
-        try
-        {
-        	//if (free) {
-        		Chat chat = new Chat();
-
-                chat.setGroupId( groupId );
-                chat.setTeacherId(teacherName );
-                chat.setChatName(chatName );
-                
-                session.beginTransaction();
-                session.save( chat );
-
-                session.getTransaction().commit();
-		//	}
-            
+            // }
 
         }
         catch ( Exception e )
@@ -849,9 +821,8 @@ public class DBManager
             }
         }
     }
-	
-	
-	 public List<Chat> getListOfChats()
+
+    public List<Chat> getListOfChats()
     {
         Session session = HibernateManager.getFactory().openSession();
         List<Chat> listOfChats = new ArrayList<Chat>();
@@ -862,7 +833,7 @@ public class DBManager
 
             String hqlQuery = "FROM Chat u WHERE u.chatId > 0";
             Query query = session.createQuery( hqlQuery );
-           // query.setParameter( "isTeacher", isTeacher );
+            // query.setParameter( "isTeacher", isTeacher );
             listOfChats = query.list();
 
             session.getTransaction().commit();
@@ -887,9 +858,8 @@ public class DBManager
         }
         return listOfChats;
     }
-<<<<<<< HEAD
-	
-	// pobieranie listy wszystkich grup
+
+    // pobieranie listy wszystkich grup
     public List<Group> getAllGroups()
     {
         Session session = HibernateManager.getFactory().openSession();
@@ -958,82 +928,84 @@ public class DBManager
             }
         }
     }
-=======
-	 
-	
-	 
-	 public void setEmailForUser( String userId, String email )
-	    {
-	        Session session = HibernateManager.getFactory().openSession();
-	        User user = new User();
 
-	        try
-	        {
-	            session.beginTransaction();
-	            user = (User) session.get( User.class, userId );
-	            if (email==null||email.isEmpty()) {
-					user.setEmail("BRAK");
-				}else{
-					user.setEmail(email);
-				}
-	            session.update( user );
-	            session.getTransaction().commit();
-	        }
-	        catch ( Exception e )
-	        {
-	            e.printStackTrace();
-	        }
-	        finally
-	        {
-	            try
-	            {
-	                if ( session != null )
-	                {
-	                    session.close();
-	                }
-	            }
-	            catch ( Exception ex )
-	            {
-	                ex.printStackTrace();
-	            }
-	        }
-	    }
-	 
-	 public void setTagsForMail( int mailId, String tags )
-	    {
-	        Session session = HibernateManager.getFactory().openSession();
-	        Mail mail = new Mail();
+    public void setEmailForUser( String userId, String email )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        User user = new User();
 
-	        try
-	        {
-	            session.beginTransaction();
-	            mail = (Mail) session.get( Mail.class, mailId );
-	            if (tags==null||tags.isEmpty()) {
-	            	mail.setTags(" ");
-				}else{
-					mail.setTags(tags);
-				}
-	            session.update( mail );
-	            session.getTransaction().commit();
-	        }
-	        catch ( Exception e )
-	        {
-	            e.printStackTrace();
-	        }
-	        finally
-	        {
-	            try
-	            {
-	                if ( session != null )
-	                {
-	                    session.close();
-	                }
-	            }
-	            catch ( Exception ex )
-	            {
-	                ex.printStackTrace();
-	            }
-	        }
-	    }
->>>>>>> origin/master
+        try
+        {
+            session.beginTransaction();
+            user = (User) session.get( User.class, userId );
+            if ( email == null || email.isEmpty() )
+            {
+                user.setEmail( "BRAK" );
+            }
+            else
+            {
+                user.setEmail( email );
+            }
+            session.update( user );
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void setTagsForMail( int mailId, String tags )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        Mail mail = new Mail();
+
+        try
+        {
+            session.beginTransaction();
+            mail = (Mail) session.get( Mail.class, mailId );
+            if ( tags == null || tags.isEmpty() )
+            {
+                mail.setTags( " " );
+            }
+            else
+            {
+                mail.setTags( tags );
+            }
+            session.update( mail );
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
 }

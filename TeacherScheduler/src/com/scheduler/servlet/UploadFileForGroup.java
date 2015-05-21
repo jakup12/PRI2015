@@ -58,7 +58,7 @@ public class UploadFileForGroup
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
         throws ServletException, IOException
     {
-        String filePath = "D:\\TMP_INPUT\\";
+        String filePath = "C:\\TMP_INPUT\\";
         // Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent( request );
         response.setContentType( "text/html" );
@@ -72,7 +72,7 @@ public class UploadFileForGroup
         // maximum size that will be stored in memory
         factory.setSizeThreshold( maxMemSize );
         // Location to save data that is larger than maxMemSize.
-        factory.setRepository( new File( "D:\\TMP_INPUT\\" ) );
+        factory.setRepository( new File( "C:\\TMP_INPUT\\" ) );
 
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload( factory );
