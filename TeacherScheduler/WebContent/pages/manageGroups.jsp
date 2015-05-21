@@ -31,6 +31,7 @@
 		<%for(int i = 0; i < size; i++){%>
 			<td>
 				<form action="addChat" method="post">
+					<input type="text" name="chatName"/>
 					<input type="hidden" name="groupId" value="<%=session.getAttribute("groupId"+i)%>"/>
 					<input type="hidden" name="teacherName" value="<%=session.getAttribute("userLogin")%>"/>
 					<input type="submit" value="Dodaj czat" name=""/>

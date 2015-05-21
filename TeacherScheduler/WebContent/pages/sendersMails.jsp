@@ -15,7 +15,9 @@
 		       for(int i = 0; i < size; i++){
 		       %>
 		       	   <tr>
-			       <td class="mailsCell">Nadawca: <%=session.getAttribute("receiverId"+i)%><br>Data: <%=session.getAttribute("date"+i)%><br><%=session.getAttribute("message"+i)%>
+			       <td class="mailsCell">Odbiorca: <%=session.getAttribute("receiverId"+i)%>
+			      		  <br>Data: <%=session.getAttribute("date"+i)%>
+			      		  <br><%=session.getAttribute("message"+i)%>
 			       	   <br>
 			       </td>
  

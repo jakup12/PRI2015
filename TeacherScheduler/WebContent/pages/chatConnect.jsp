@@ -10,7 +10,14 @@
 		<div>
 			<form action="chat" method="post" id="mailForm">
 	            <br>Czat:
-	            <input name="chatId" type="text"/>
+	            <select name="chatId">
+			      		<%int chatsSize = Integer.parseInt( session.getAttribute("listOfChatsSize").toString());
+		       	  		for(int j = 0; j < chatsSize; j++){
+		          		%>
+				  			<option value="<%=session.getAttribute("chatId"+j)%>"><%=session.getAttribute("chatName"+j)%></option>
+				  		<%} %>
+				</select>
+	          <!--  <input name="chatId" type="text"/>-->
 	            <br>
 	            <div>
 		            <input type="submit" name="submit" class="submit" value="Dołącz" />

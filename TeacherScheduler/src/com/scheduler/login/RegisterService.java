@@ -7,11 +7,11 @@ import com.scheduler.hibernate.run.DBManager;
  */
 public class RegisterService
 {
-    private String userId, password, name, surname;
+    private String userId, password, name, surname, email;
 
     private boolean isTeacher;
 
-    public RegisterService( String userId, String password, String name, String surname, boolean isTeacher )
+    public RegisterService( String userId, String password, String name, String surname, boolean isTeacher ,String email)
 
     {
         this.userId = userId;
@@ -19,6 +19,7 @@ public class RegisterService
         this.name = name;
         this.surname = surname;
         this.isTeacher = isTeacher;
+        this.email = email;
     }
 
     public boolean registerUser()
@@ -35,7 +36,7 @@ public class RegisterService
         else
         {
             // wstawienie u¿ytkownika
-            dbm.insertUser( userId, password, name, surname, isTeacher );
+            dbm.insertUser( userId, password, name, surname, isTeacher, email);
             return true;
         }
     }

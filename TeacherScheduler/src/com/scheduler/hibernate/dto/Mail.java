@@ -28,6 +28,9 @@ public class Mail {
     @Column( name = "DATE" )
     private String date;
     
+    @Column( name = "TAGS" )
+    private String tags;
+    
     public int getMailId()
     {
         return mailId;
@@ -76,5 +79,15 @@ public class Mail {
     public void setDate( String date )
     {
         this.date = date;
+    }
+    
+    public String getTags()
+    {
+        return tags;
+    }
+
+    public void setTags( String tags )
+    {
+        this.tags = tags;
     }
 }

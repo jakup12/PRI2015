@@ -1,8 +1,6 @@
 package com.scheduler.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,15 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.scheduler.hibernate.dto.Chat;
+
 import com.scheduler.hibernate.run.DBManager;
 
-
 /**
- * Servlet implementation class GetSendersMails
+ * Servlet implementation class
  */
-@WebServlet( "/pages/ChatConnect" )
-public class ChatConnect
+@WebServlet( "/pages/setEmail" )
+public class SetEmail
     extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -26,7 +23,7 @@ public class ChatConnect
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatConnect()
+    public SetEmail()
     {
         super();
 
@@ -44,19 +41,23 @@ public class ChatConnect
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
         throws ServletException, IOException
     {
-    	 DBManager dbm = new DBManager();
-    	 List<Chat> listOfChats = new ArrayList<Chat>();
+        String userId = "";
+        if ( request.getSession().getAttribute( "userLogin" ) != null )
+        {
+            userId = (String) request.getSession().getAttribute( "userLogin" );
+        }
+        else
+        {
+            userId = new String( request.getParameter( "userId" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        }
 
-    	 listOfChats = dbm.getListOfChats();
-         request.getSession().setAttribute( "listOfChatsSize", listOfChats.size() );
+        String email = new String( request.getParameter( "email" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        DBManager dbm = new DBManager();
+        
 
-         for ( int j = 0; j < listOfChats.size(); j++ )
-         {
-             request.getSession().setAttribute( "chatId" + j, listOfChats.get( j ).getChatId() );
-             request.getSession().setAttribute( "chatName" + j, listOfChats.get( j ).getChatName() );
-         }
-    	
-    	//filtrowanie czatu po grupach
-       response.sendRedirect( "chatConnect.jsp" );
+        dbm.setEmailForUser(userId, email);
+        request.getSession().setAttribute( "email", email );
+
+        response.sendRedirect( "mainPage.jsp" );
     }
 }

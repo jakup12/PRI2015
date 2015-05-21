@@ -8,13 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.scheduler.hibernate.run.DBManager;
 
 /**
- * Servlet implementation class AddNewTerm
+ * Servlet implementation class
  */
-@WebServlet( "/pages/addChatMess" )
-public class AddChatMess
+@WebServlet( "/pages/setTags" )
+public class SetTags
     extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -22,10 +23,16 @@ public class AddChatMess
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddChatMess()
+    public SetTags()
     {
         super();
 
+    }
+
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+        throws ServletException, IOException
+    {
+        doPost( request, response );
     }
 
     /**
@@ -34,27 +41,24 @@ public class AddChatMess
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
         throws ServletException, IOException
     {
-    	String userId = "";
+        String userId = "";
         if ( request.getSession().getAttribute( "userLogin" ) != null )
         {
-        	userId = (String) request.getSession().getAttribute( "userLogin" );
+            userId = (String) request.getSession().getAttribute( "userLogin" );
         }
         else
         {
-        	userId = new String( request.getParameter( "userLogin" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+            userId = new String( request.getParameter( "userId" ).getBytes( "ISO-8859-1" ), "UTF-8" );
         }
-        
-    	String chatId = new String( request.getParameter( "chatId" ).getBytes( "ISO-8859-1" ), "UTF-8" );
-    	String message = new String( request.getParameter( "message" ).getBytes( "ISO-8859-1" ), "UTF-8" );
-    	
-       // System.out.println( senderId + " => " + receiverId + " | "+date.toString() +" \n"+ message );
 
+        int mailId = Integer.parseInt(new String( request.getParameter( "mailId" ).getBytes( "ISO-8859-1" ), "UTF-8" ));
+        String tags = new String( request.getParameter( "tags" ).getBytes( "ISO-8859-1" ), "UTF-8" );
         DBManager dbm = new DBManager();
+        
 
-        dbm.addChatMess(userId, chatId, message);
+        dbm.setTagsForMail(mailId, tags);
+        request.getSession().setAttribute( "tags", tags );
 
-        //request.getSession().setAttribute( "chatId", chatId);
-        response.sendRedirect( "chat.jsp" );
+        response.sendRedirect( "mainPage.jsp" );
     }
 }
-

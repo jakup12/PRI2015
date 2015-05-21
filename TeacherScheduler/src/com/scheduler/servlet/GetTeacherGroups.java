@@ -95,6 +95,7 @@ public class GetTeacherGroups
             request.getSession().setAttribute( "studentFullName" + j, listOfStudents.get( j ).getFullName() );
         }
 
+        request.getSession().setAttribute( "userLogin", userId );
         response.sendRedirect( "manageGroups.jsp" );
     }
 }

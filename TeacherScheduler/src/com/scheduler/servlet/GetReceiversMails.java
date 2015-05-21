@@ -61,12 +61,15 @@ public class GetReceiversMails
         for ( int i = 0; i < listOfMails.size(); i++ )
         {
             mail = listOfMails.get( i );
+            request.getSession().setAttribute( "mailId" + i , mail.getMailId());
             request.getSession().setAttribute( "senderId" + i , mail.getSenderId());
             request.getSession().setAttribute( "message" + i , mail.getMessage());
             request.getSession().setAttribute( "date" + i , mail.getDate());
-
+            request.getSession().setAttribute( "tags" + i , mail.getTags());
         }
 
+        request.getSession().setAttribute( "filterTags" , "");
+        
         response.sendRedirect( "receiversMails.jsp" );
     }
 }

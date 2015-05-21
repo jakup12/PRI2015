@@ -21,6 +21,9 @@ public class Chat {
 	
     @Column( name = "GROUPID" )
     private int groupId;
+    
+    @Column( name = "CHATNAME" )
+    private String chatName;
 
     
     public int getChatId()
@@ -51,5 +54,15 @@ public class Chat {
     public void setGroupId( int groupId )
     {
         this.groupId = groupId;
+    }
+    
+    public String getChatName()
+    {
+        return chatName;
+    }
+
+    public void setChatName( String chatName )
+    {
+        this.chatName = chatName;
     }
 }

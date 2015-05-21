@@ -28,6 +28,13 @@
 		</tr>   
 		</table>
 		
+		<form action="setEmail" method="post">
+	            <input name="email" type="text" value="<%=session.getAttribute("email")%>"/>
+	            <input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
+	            <input type="submit" value="Uaktualnij" />
+	          
+	       	</form>
+		
 	<!-- Formularz otwierający kalendarz -->
 		<form action="getTeacherCalendar" method="post">
 			<input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
@@ -59,7 +66,13 @@
 			<td><%=session.getAttribute("userSurname") %></td>
 		</tr>  
 		</table>
-		<br> 	
+		
+		<form action="setEmail" method="post">
+	            <input name="email" type="text" value="<%=session.getAttribute("email")%>"/>
+	            <input type="hidden" name="userId" value="<%=session.getAttribute("userLogin")%>"/>
+	            <input type="submit" value="Uaktualnij" />
+	          
+	       	</form>
 		<form action="selectTeacher" method="post" id="teacherForm">
 			<h4>*** Zapis na dyżury ***</h4>Wybierz wykładowcę:	
             <br>
@@ -75,19 +88,19 @@
             </div>
        	</form>
 	<%}%>
-	<h3>Nowa wiadomość</h3>
+	*******************
 		<form action="newMail" method="post">
 			
 			<input type="submit" value="Nowa Wiadomość" name=""/>
 		</form>
 	
-	<h3>Wysłane wiadomości</h3>
+	
 		<form action="getSendersMails" method="post">
 			<input type="hidden" name="senderId" value="<%=session.getAttribute("userLogin")%>"/>
 			
 			<input type="submit" value="Wysłane" name=""/>
 		</form>
-	<h3>Odebrane wiadomości</h3>
+	
 		<form action="getReceiversMails" method="post">
 			<input type="hidden" name="receiverId" value="<%=session.getAttribute("userLogin")%>"/>
 			
