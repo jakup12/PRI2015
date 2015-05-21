@@ -122,7 +122,7 @@ public class DBManager
             user.setUserName( name );
             user.setUserSurname( surname );
             user.setTeacher( isTeacher );
-            if (email==null) {
+            if (email==null||email.isEmpty()) {
 				user.setEmail("BRAK");
 			}else{
 				user.setEmail(email);
@@ -386,7 +386,7 @@ public class DBManager
             mail.setReceiverId( receiverId );
             mail.setMessage( message );
             mail.setDate( date );
-            
+            mail.setTags(" ");
             session.beginTransaction();
             session.save( mail );
 
@@ -899,8 +899,49 @@ public class DBManager
 	        {
 	            session.beginTransaction();
 	            user = (User) session.get( User.class, userId );
-	            user.setEmail(email);
+	            if (email==null||email.isEmpty()) {
+					user.setEmail("BRAK");
+				}else{
+					user.setEmail(email);
+				}
 	            session.update( user );
+	            session.getTransaction().commit();
+	        }
+	        catch ( Exception e )
+	        {
+	            e.printStackTrace();
+	        }
+	        finally
+	        {
+	            try
+	            {
+	                if ( session != null )
+	                {
+	                    session.close();
+	                }
+	            }
+	            catch ( Exception ex )
+	            {
+	                ex.printStackTrace();
+	            }
+	        }
+	    }
+	 
+	 public void setTagsForMail( int mailId, String tags )
+	    {
+	        Session session = HibernateManager.getFactory().openSession();
+	        Mail mail = new Mail();
+
+	        try
+	        {
+	            session.beginTransaction();
+	            mail = (Mail) session.get( Mail.class, mailId );
+	            if (tags==null||tags.isEmpty()) {
+	            	mail.setTags(" ");
+				}else{
+					mail.setTags(tags);
+				}
+	            session.update( mail );
 	            session.getTransaction().commit();
 	        }
 	        catch ( Exception e )

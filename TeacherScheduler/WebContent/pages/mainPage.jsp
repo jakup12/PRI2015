@@ -70,7 +70,6 @@
 	            <input type="submit" value="Uaktualnij" />
 	          
 	       	</form>
-		<br> 	
 		<form action="selectTeacher" method="post" id="teacherForm">
 			<h4>*** Zapis na dyżury ***</h4>Wybierz wykładowcę:	
             <br>
@@ -86,19 +85,19 @@
             </div>
        	</form>
 	<%}%>
-	<h3>Nowa wiadomość</h3>
+	*******************
 		<form action="newMail" method="post">
 			
 			<input type="submit" value="Nowa Wiadomość" name=""/>
 		</form>
 	
-	<h3>Wysłane wiadomości</h3>
+	
 		<form action="getSendersMails" method="post">
 			<input type="hidden" name="senderId" value="<%=session.getAttribute("userLogin")%>"/>
 			
 			<input type="submit" value="Wysłane" name=""/>
 		</form>
-	<h3>Odebrane wiadomości</h3>
+	
 		<form action="getReceiversMails" method="post">
 			<input type="hidden" name="receiverId" value="<%=session.getAttribute("userLogin")%>"/>
 			

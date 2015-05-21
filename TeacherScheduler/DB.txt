@@ -45,6 +45,7 @@ CREATE TABLE mailstable
   receiverid character varying(255),
   message character varying(4000),
   date character varying(255),
+  tags character varying(4000),
   CONSTRAINT mailstable_pkey PRIMARY KEY (mailid)
 )
 WITH (

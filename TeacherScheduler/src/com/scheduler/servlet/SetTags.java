@@ -14,8 +14,8 @@ import com.scheduler.hibernate.run.DBManager;
 /**
  * Servlet implementation class
  */
-@WebServlet( "/pages/setEmail" )
-public class SetEmail
+@WebServlet( "/pages/setTags" )
+public class SetTags
     extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class SetEmail
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SetEmail()
+    public SetTags()
     {
         super();
 
@@ -51,12 +51,13 @@ public class SetEmail
             userId = new String( request.getParameter( "userId" ).getBytes( "ISO-8859-1" ), "UTF-8" );
         }
 
-        String email = new String( request.getParameter( "email" ).getBytes( "ISO-8859-1" ), "UTF-8" );
+        int mailId = Integer.parseInt(new String( request.getParameter( "mailId" ).getBytes( "ISO-8859-1" ), "UTF-8" ));
+        String tags = new String( request.getParameter( "tags" ).getBytes( "ISO-8859-1" ), "UTF-8" );
         DBManager dbm = new DBManager();
         
 
-        dbm.setEmailForUser(userId, email);
-        request.getSession().setAttribute( "email", email );
+        dbm.setTagsForMail(mailId, tags);
+        request.getSession().setAttribute( "tags", tags );
 
         response.sendRedirect( "mainPage.jsp" );
     }

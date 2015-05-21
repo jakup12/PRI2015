@@ -67,8 +67,7 @@ public class Chatt
             request.getSession().setAttribute( "message" + i , mess.getMessage());
 
         }
-        request.getSession().setAttribute( "chatId" , chatId);
-
+        request.getSession().setAttribute( "chatId", chatId);
         response.sendRedirect( "chat.jsp" );
     }
 }
