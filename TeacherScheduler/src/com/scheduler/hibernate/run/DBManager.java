@@ -1008,4 +1008,78 @@ public class DBManager
             }
         }
     }
+
+    // pobieranie grupy studenta
+    public List<GroupUser> getGroupForStudent( String userId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<GroupUser> listOfGU = new ArrayList<GroupUser>();
+
+        try
+        {
+            session.beginTransaction();
+            String hqlQuery = "SELECT distinct g FROM GroupUser g WHERE studentId=:studentId";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "studentId", userId );
+            listOfGU = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfGU;
+    }
+
+    // pobieranie plików dla grupy
+    public List<FileUpload> getFilesForGroup( int groupId )
+    {
+        Session session = HibernateManager.getFactory().openSession();
+        List<FileUpload> listOfFiles = new ArrayList<FileUpload>();
+
+        try
+        {
+            session.beginTransaction();
+            String hqlQuery = "FROM FileUpload WHERE groupId=:groupId";
+            Query query = session.createQuery( hqlQuery );
+            query.setParameter( "groupId", Integer.toString( groupId ) );
+            listOfFiles = query.list();
+
+            session.getTransaction().commit();
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if ( session != null )
+                {
+                    session.close();
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
+        return listOfFiles;
+    }
 }
